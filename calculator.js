@@ -4,7 +4,7 @@ let numberOne = '';
 let inputNum = '0';
 let line1 = document.getElementById('line1');
 let line2 = document.getElementById('line2');
-line1.innerText = inputNum;
+line2.innerText = inputNum;
 
 function add(a, b) {
     return a + b;
@@ -56,6 +56,34 @@ function numberButton(event) {
         inputNum = event.currentTarget.innerText;
     } else {
         inputNum = inputNum + event.currentTarget.innerText;
+    };
+    line2.innerText = inputNum;
+};
+
+function decimal() {
+    let arr1 = inputNum.split('');
+    if (!arr1.some(x => x == '.')) {
+        inputNum = inputNum + '.';
+        line2.innerText = inputNum;
+    };
+};
+
+function delNum() {
+    if ((inputNum.length == 2) && (inputNum[0] == '-')) {
+        inputNum = '0';
+    } else if (inputNum.length == 1) {
+        inputNum = '0';
+    } else {
+        inputNum = inputNum.slice(0, -1);
+    };
+    line2.innerText = inputNum;
+};
+
+function changeSign() {
+    if (inputNum[0] == '-') {
+        inputNum = inputNum.slice(1);
+    } else {
+        inputNum = '-' + inputNum;
     };
     line2.innerText = inputNum;
 };
@@ -131,3 +159,12 @@ for (let i = 0; i < 4; i++) {
 
 var element = document.getElementById(`equals`);
 element.addEventListener('click', parseEq);
+
+var element = document.getElementById(`decimal`);
+element.addEventListener('click', decimal);
+
+var element = document.getElementById(`delete`);
+element.addEventListener('click', delNum);
+
+var element = document.getElementById(`sign`);
+element.addEventListener('click', changeSign);

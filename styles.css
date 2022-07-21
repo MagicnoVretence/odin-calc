@@ -18,3 +18,7 @@
     font-size: 24px;
     font-weight: bold;
 }
+
+#equals {
+    grid-column: 3 / 5;
+}
