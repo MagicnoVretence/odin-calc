@@ -1,10 +1,37 @@
+body {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: blanchedalmond;
+}
+
 #display {
     height: 100px;
     width: 360px;
+    border: 5px solid black;
+    background-color: rgba(123, 196, 123, 0.582);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #display p {
+    margin: 0;
     text-align: right;
+    font-weight: bold;
+}
+
+#line1 {
+    padding: 10px;
+    padding-bottom: 0;
+    height: 30px;
+    font-size: 24px;
+}
+
+#line2 {
+    padding: 10px;
+    height: 40px;
+    font-size: 36px;
 }
 
 #buttonArea {
@@ -12,6 +39,9 @@
     height: 480px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    border: 5px solid black;
+    background-color: black;
+    border-top: none;
 }
 
 #buttonArea button {
