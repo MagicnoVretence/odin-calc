@@ -21,6 +21,9 @@ function multiply(a, b) {
 function divide(a, b) {
     if (b == 0) {
         alert('Division by zero not allowed!');
+        operation = '';
+        numberOne = '';
+        inputNum = '';
         return a;
     } else {
         return a / b;
@@ -119,7 +122,11 @@ function parseEq() {
         return;
     } else {
         let result = operate(operation, numberOne, inputNum);
-        line1.innerText = `${numberOne} ${operation} ${inputNum} =`;
+        if (![numberOne, operation, inputNum].some(x => x == '')) {
+            line1.innerText = `${numberOne} ${operation} ${inputNum} =`;
+        } else {
+            line1.innerText = '';
+        };
         line2.innerText = `${round10(result)}`;
         numberOne = '';
         operation = '';
