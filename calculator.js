@@ -51,11 +51,11 @@ function clear() {
     line2.innerText = inputNum;
 };
 
-function numberButton(event) {
+function numberButton(value) {
     if (inputNum == '0') {
-        inputNum = event.currentTarget.innerText;
+        inputNum = value;
     } else {
-        inputNum = inputNum + event.currentTarget.innerText;
+        inputNum = inputNum + value;
     };
     line2.innerText = inputNum;
 };
@@ -114,7 +114,7 @@ function operate(operator, a, b) {
     };
 };
 
-function parseEq(event) {
+function parseEq() {
     if (operation == '') {
         return;
     } else {
@@ -127,17 +127,17 @@ function parseEq(event) {
     };
 };
 
-function parseOp(event) {
+function parseOp(value) {
     if (operation == '') {
         numberOne = inputNum;
-        operation = event.currentTarget.innerText;
+        operation = value;
         line1.innerText = `${numberOne} ${operation} `;
         inputNum = '0';
         line2.innerText = inputNum;
     } else {
         let result = operate(operation, numberOne, inputNum);
         numberOne = `${round10(result)}`;
-        operation = event.currentTarget.innerText;
+        operation = value;
         line1.innerText = `${numberOne} ${operation} `;
         inputNum = '0';
         line2.innerText = inputNum;
@@ -146,7 +146,7 @@ function parseOp(event) {
 
 for (let i = 0; i < 10; i++) {
     var element = document.getElementById(`${i}`);
-    element.addEventListener('click', numberButton);
+    element.addEventListener('click', (event) => numberButton(event.currentTarget.innerText));
 };
 
 var element = document.getElementById(`clear`);
@@ -154,7 +154,7 @@ element.addEventListener('click', clear);
 
 for (let i = 0; i < 4; i++) {
     var element = document.getElementById(operationButtons[i]);
-    element.addEventListener('click', parseOp);
+    element.addEventListener('click', (event) => parseOp(event.currentTarget.innerText));
 };
 
 var element = document.getElementById(`equals`);
@@ -168,3 +168,44 @@ element.addEventListener('click', delNum);
 
 var element = document.getElementById(`sign`);
 element.addEventListener('click', changeSign);
+
+document.addEventListener('keypress', press => {
+    switch (press.key) {
+        case '+':
+        case '-':
+        case '/':
+        case '*':
+            parseOp(press.key);
+            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            numberButton(press.key);
+            break;
+        case '.':
+        case ',':
+            decimal();
+            break;
+    };
+});
+
+document.addEventListener('keydown', press => {
+    switch (press.key) {
+        case 'Enter':
+            parseEq();
+            break;
+        case 'Backspace':
+            delNum();
+            break;
+        case 'Delete':
+            clear();
+            break;
+    };
+});
