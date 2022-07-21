@@ -1,0 +1,19 @@
+#display {
+    height: 100px;
+}
+
+#display p {
+    text-align: right;
+}
+
+#buttonArea {
+    width: 360px;
+    height: 480px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#buttonArea button {
+    font-size: 24px;
+    font-weight: bold;
+}
