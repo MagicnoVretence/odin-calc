@@ -27,11 +27,36 @@ function divide(a, b) {
     };
 };
 
+function round10(number) {
+    let usableNumber;
+    if (typeof number == 'number') {
+        usableNumber = number;
+    } else if (number.split('').some(x => x == '.')) {
+        usableNumber = parseFloat(number);
+    } else {
+        usableNumber = parseInt(number);
+    };
+    if ((usableNumber * 10000000000) % 1 > 0) {
+        return Math.round(usableNumber * 10000000000) / 10000000000;
+    } else {
+        return usableNumber;
+    };
+};
+
 function clear() {
     numberOne = '';
     inputNum = '0';
     operation = '';
     line1.innerText = '';
+    line2.innerText = inputNum;
+};
+
+function numberButton(event) {
+    if (inputNum == '0') {
+        inputNum = event.currentTarget.innerText;
+    } else {
+        inputNum = inputNum + event.currentTarget.innerText;
+    };
     line2.innerText = inputNum;
 };
 
@@ -61,6 +86,19 @@ function operate(operator, a, b) {
     };
 };
 
+function parseEq(event) {
+    if (operation == '') {
+        return;
+    } else {
+        let result = operate(operation, numberOne, inputNum);
+        line1.innerText = `${numberOne} ${operation} ${inputNum} =`;
+        line2.innerText = `${round10(result)}`;
+        numberOne = '';
+        operation = '';
+        inputNum = `${round10(result)}`;
+    };
+};
+
 function parseOp(event) {
     if (operation == '') {
         numberOne = inputNum;
@@ -70,7 +108,7 @@ function parseOp(event) {
         line2.innerText = inputNum;
     } else {
         let result = operate(operation, numberOne, inputNum);
-        numberOne = `${result}`;
+        numberOne = `${round10(result)}`;
         operation = event.currentTarget.innerText;
         line1.innerText = `${numberOne} ${operation} `;
         inputNum = '0';
@@ -80,15 +118,7 @@ function parseOp(event) {
 
 for (let i = 0; i < 10; i++) {
     var element = document.getElementById(`${i}`);
-    element.addEventListener('click', () => {
-        console.log(i);
-        if (inputNum == '0') {
-            inputNum = `${i}`;
-        } else {
-            inputNum = inputNum + `${i}`;
-        };
-        line2.innerText = inputNum;
-    });
+    element.addEventListener('click', numberButton);
 };
 
 var element = document.getElementById(`clear`);
@@ -98,3 +128,6 @@ for (let i = 0; i < 4; i++) {
     var element = document.getElementById(operationButtons[i]);
     element.addEventListener('click', parseOp);
 };
+
+var element = document.getElementById(`equals`);
+element.addEventListener('click', parseEq);
